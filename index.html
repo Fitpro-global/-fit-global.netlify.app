@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIT GLOBAL | Academia Completa</title>
+  <!-- Carregamento rápido e confiável -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fit: {
+              dark: '#0F172A',
+              primary: '#FF3D00',
+              secondary: '#10B981',
+              light: '#F8FAFC'
+            }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto { content-visibility: auto; }
+      .gradient-fit { background: linear-gradient(135deg, #FF3D00 0%, #FF6D00 100%); }
+    }
+  </style>
+</head>
+<body class="bg-fit-light font-sans text-fit-dark">
+
+  <!-- Navegação -->
+  <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-fit-primary">FIT GLOBAL</a>
+      <div class="hidden md:flex gap-8">
+        <a href="#planos" class="hover:text-fit-primary transition" data-i18n="nav_planos">Planos</a>
+        <a href="#sobre" class="hover:text-fit-primary transition" data-i18n="nav_sobre">Sobre</a>
+        <a href="#ajuda" class="hover:text-fit-primary transition" data-i18n="nav_ajuda">Ajuda</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <select id="idioma" class="bg-gray-100 border-0 rounded px-2 py-1 text-sm cursor-pointer">
+          <option value="pt">🇧🇷 PT</option>
+          <option value="en">🇺🇸 EN</option>
+          <option value="es">🇪🇸 ES</option>
+        </select>
+        <button id="btnAdmin" class="text-sm px-3 py-1 border rounded hover:bg-gray-100 transition">Admin</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 px-4">
+    <div class="container mx-auto text-center">
+      <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-bold mb-6" data-i18n="hero_title">
+        Sua Academia <span class="text-fit-primary">No Mundo Todo</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10" data-i18n="hero_desc">
+        Treinos personalizados, IA de atendimento, evolução completa. Pagamento único, acesso vitalício.
+      </p>
+      <a href="#planos" class="inline-block gradient-fit text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1" data-i18n="hero_btn">
+        Ver Planos 👇
+      </a>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section id="planos" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-16" data-i18n="plans_title">Escolha Seu Plano</h2>
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Plano Individual -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-fit-secondary hover:shadow-2xl transition duration-300">
+          <h3 class="text-2xl font-bold mb-4" data-i18n="plan_ind_title">Plano Individual</h3>
+          <div class="mb-6">
+            <div class="text-3xl font-bold" data-i18n="plan_ind_price">R$ 49,99</div>
+            <div class="text-gray-500" data-i18n="plan_ind_sub">$ 30 USD • € 28 EUR</div>
+            <div class="text-sm text-fit-secondary mt-1 font-medium" data-i18n="plan_ind_tag">Pagamento Único • Acesso Vitalício ✅</div>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span data-i18n="plan_ind_f1">Treinos personalizados</span></li>
+[01/10/2026 12:16] Maylson Campello: <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span data-i18n="plan_ind_f2">Acompanhamento de evolução</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span data-i18n="plan_ind_f3">IA 24h tirando dúvidas</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span data-i18n="plan_ind_f4">Acesso em todos os idiomas</span></li>
+          </ul>
+          <button class="buy-btn w-full py-3 rounded-lg bg-fit-secondary text-white font-semibold hover:bg-green-600 transition">
+            <span data-i18n="plan_ind_btn">Comprar Individual</span>
+          </button>
+        </div>
+
+        <!-- Academia Profissional -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-fit-primary relative overflow-hidden hover:shadow-2xl transition duration-300">
+          <div class="absolute top-4 right-4 bg-fit-primary text-white text-xs px-3 py-1 rounded-full font-bold" data-i18n="plan_pro_tag">MAIS COMPLETO</div>
+          <h3 class="text-2xl font-bold mb-4" data-i18n="plan_pro_title">Academia Profissional</h3>
+          <div class="mb-6">
+            <div class="text-3xl font-bold" data-i18n="plan_pro_price">R$ 80,00</div>
+            <div class="text-gray-500" data-i18n="plan_pro_sub">$ 79,99 USD • € 69,99 EUR</div>
+            <div class="text-sm text-fit-primary mt-1 font-medium" data-i18n="plan_ind_tag">Pagamento Único • Acesso Vitalício ✅</div>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span data-i18n="plan_pro_f1">Tudo do Plano Individual</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span data-i18n="plan_pro_f2">Gestão de alunos</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span data-i18n="plan_pro_f3">Relatórios e estatísticas</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span data-i18n="plan_pro_f4">Marca personalizada</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span data-i18n="plan_pro_f5">Suporte prioritário</span></li>
+          </ul>
+          <button class="buy-btn w-full py-3 rounded-lg gradient-fit text-white font-semibold hover:opacity-90 transition">
+            <span data-i18n="plan_pro_btn">Comprar Profissional</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Assistente IA -->
+  <section id="ajuda" class="py-20">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="text-2xl font-bold text-center mb-8" data-i18n="chat_title">Assistente IA — Tire Suas Dúvidas</h2>
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+        <div id="chat-mensagens" class="h-64 overflow-y-auto mb-4 space-y-3 p-3 bg-gray-50 rounded-lg">
+          <div class="bg-gray-100 p-3 rounded-lg max-w-[80%]" data-i18n="chat_welcome">
+            Olá! 👋 Sou a assistente da FIT GLOBAL. Como posso te ajudar hoje?
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <input id="chat-input" type="text" data-i18n-placeholder="chat_placeholder" placeholder="Digite sua dúvida..." class="flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-fit-primary/50">
+          <button id="chat-enviar" class="px-6 py-3 bg-fit-primary text-white rounded-lg hover:opacity-90 transition font-medium">
+            <span data-i18n="chat_btn">Enviar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+[01/10/2026 12:16] Maylson Campello: <!-- Rodapé -->
+  <footer class="bg-fit-dark text-white py-10">
+    <div class="container mx-auto px-4 text-center">
+      <p data-i18n="footer_text">FIT GLOBAL © 2026 — Todos os direitos reservados</p>
+      <p class="text-sm text-gray-400 mt-2">
+        <a href="#" id="link-reembolso" class="hover:underline hover:text-white transition" data-i18n="footer_refund">Política de Reembolso (7 dias)</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal de Reembolso -->
+  <div id="modal-reembolso" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl animate-[fadeIn_0.2s_ease-out]">
+      <h3 class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2" data-i18n="modal_title">
+        <i class="fa fa-exclamation-triangle"></i> AVISO IMPORTANTE
+      </h3>
+      <p class="mb-4 text-gray-700" data-i18n="modal_desc1">Você está solicitando reembolso dentro do prazo de 7 dias.</p>
+      <p class="font-semibold mb-6 text-red-600 bg-red-50 p-3 rounded-lg border border-red-100" data-i18n="modal_desc2">Ao confirmar, seu acesso será ENCERRADO PERMANENTEMENTE, sem possibilidade de retorno.</p>
+      <div class="flex gap-3">
+        <button id="btn-cancelar-reembolso" class="flex-1 py-2 border rounded-lg hover:bg-gray-100 transition font-medium" data-i18n="modal_cancel">Cancelar</button>
+        <button id="btn-confirmar-reembolso" class="flex-1 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium" data-i18n="modal_confirm">Confirmar Reembolso</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 1. SISTEMA DE TRADUÇÃO (PT, EN, ES)
+    // ==========================================
+    const i18n = {
+      pt: {
+        nav_planos: "Planos", nav_sobre: "Sobre", nav_ajuda: "Ajuda",
+        hero_title: "Sua Academia <span class='text-fit-primary'>No Mundo Todo</span>",
+        hero_desc: "Treinos personalizados, IA de atendimento, evolução completa. Pagamento único, acesso vitalício.",
+        hero_btn: "Ver Planos 👇",
+        plans_title: "Escolha Seu Plano",
+        plan_ind_title: "Plano Individual", plan_ind_price: "R$ 49,99", plan_ind_sub: "$ 30 USD • € 28 EUR",
+        plan_ind_tag: "Pagamento Único • Acesso Vitalício ✅",
+        plan_ind_f1: "Treinos personalizados", plan_ind_f2: "Acompanhamento de evolução",
+        plan_ind_f3: "IA 24h tirando dúvidas", plan_ind_f4: "Acesso em todos os idiomas", plan_ind_btn: "Comprar Individual",
+        plan_pro_title: "Academia Profissional", plan_pro_tag: "MAIS COMPLETO", plan_pro_price: "R$ 80,00", plan_pro_sub: "$ 79,99 USD • € 69,99 EUR",
+        plan_pro_f1: "Tudo do Plano Individual", plan_pro_f2: "Gestão de alunos", plan_pro_f3: "Relatórios e estatísticas",
+        plan_pro_f4: "Marca personalizada", plan_pro_f5: "Suporte prioritário", plan_pro_btn: "Comprar Profissional",
+        chat_title: "Assistente IA — Tire Suas Dúvidas", chat_placeholder: "Digite sua dúvida...", chat_btn: "Enviar",
+        chat_welcome: "Olá! 👋 Sou a assistente da FIT GLOBAL. Como posso te ajudar hoje?",
+        footer_text: "FIT GLOBAL © 2026 — Todos os direitos reservados", footer_refund: "Política de Reembolso (7 dias)",
+        modal_title: "⚠️ AVISO IMPORTANTE", modal_desc1: "Você está solicitando reembolso dentro do prazo de 7 dias.",
+        modal_desc2: "Ao confirmar, seu acesso será ENCERRADO PERMANENTEMENTE, sem possibilidade de retorno.",
+        modal_cancel: "Cancelar", modal_confirm: "Confirmar Reembolso"
+      },
+      en: {
+        nav_planos: "Plans", nav_sobre: "About", nav_ajuda: "Help",
+        hero_title: "Your Gym <span class='text-fit-primary'>Worldwide</span>",
+        hero_desc: "Personalized workouts, AI support, complete evolution. One-time payment, lifetime access.",
+[01/10/2026 12:16] Maylson Campello: hero_btn: "View Plans 👇",
+        plans_title: "Choose Your Plan",
+        plan_ind_title: "Individual Plan", plan_ind_price: "$ 30 USD", plan_ind_sub: "R$ 49,99 • € 28 EUR",
+        plan_ind_tag: "One-time Payment • Lifetime Access ✅",
+        plan_ind_f1: "Personalized workouts", plan_ind_f2: "Progress tracking",
+        plan_ind_f3: "24/7 AI support", plan_ind_f4: "Access in all languages", plan_ind_btn: "Buy Individual",
+        plan_pro_title: "Professional Gym", plan_pro_tag: "MOST COMPLETE", plan_pro_price: "$ 79.99 USD", plan_pro_sub: "R$ 80,00 • € 69,99 EUR",
+        plan_pro_f1: "Everything in Individual Plan", plan_pro_f2: "Student management", plan_pro_f3: "Reports and statistics",
+        plan_pro_f4: "Custom branding", plan_pro_f5: "Priority support", plan_pro_btn: "Buy Professional",
+        chat_title: "AI Assistant — Ask Your Questions", chat_placeholder: "Type your question...", chat_btn: "Send",
+        chat_welcome: "Hello! 👋 I'm the FIT GLOBAL assistant. How can I help you today?",
+        footer_text: "FIT GLOBAL © 2026 — All rights reserved", footer_refund: "Refund Policy (7 days)",
+        modal_title: "⚠️ IMPORTANT NOTICE", modal_desc1: "You are requesting a refund within the 7-day period.",
+        modal_desc2: "By confirming, your access will be PERMANENTLY TERMINATED, with no possibility of return.",
+        modal_cancel: "Cancel", modal_confirm: "Confirm Refund"
+      },
+      es: {
+        nav_planos: "Planes", nav_sobre: "Sobre", nav_ajuda: "Ayuda",
+        hero_title: "Tu Gimnasio <span class='text-fit-primary'>En Todo El Mundo</span>",
+        hero_desc: "Entrenamientos personalizados, soporte de IA, evolución completa. Pago único, acceso de por vida.",
+        hero_btn: "Ver Planes 👇",
+        plans_title: "Elige Tu Plan",
+        plan_ind_title: "Plan Individual", plan_ind_price: "€ 28 EUR", plan_ind_sub: "R$ 49,99 • $ 30 USD",
+        plan_ind_tag: "Pago Único • Acceso de por vida ✅",
+        plan_ind_f1: "Entrenamientos personalizados", plan_ind_f2: "Seguimiento de progreso",
+        plan_ind_f3: "Soporte de IA 24/7", plan_ind_f4: "Acceso en todos los idiomas", plan_ind_btn: "Comprar Individual",
+        plan_pro_title: "Gimnasio Profesional", plan_pro_tag: "MÁS COMPLETO", plan_pro_price: "€ 69,99 EUR", plan_pro_sub: "R$ 80,00 • $ 79,99 USD",
+        plan_pro_f1: "Todo lo del Plan Individual", plan_pro_f2: "Gestión de alumnos", plan_pro_f3: "Informes y estadísticas",
+        plan_pro_f4: "Marca personalizada", plan_pro_f5: "Soporte prioritario", plan_pro_btn: "Comprar Profesional",
+        chat_title: "Asistente de IA — Resuelve Tus Dudas", chat_placeholder: "Escribe tu duda...", chat_btn: "Enviar",
+        chat_welcome: "¡Hola! 👋 Soy el asistente de FIT GLOBAL. ¿Cómo puedo ayudarte hoy?",
+        footer_text: "FIT GLOBAL © 2026 — Todos los derechos reservados", footer_refund: "Política de Reembolso (7 días)",
+        modal_title: "⚠️ AVISO IMPORTANTE", modal_desc1: "Estás solicitando un reembolso dentro del plazo de 7 días.",
+        modal_desc2: "Al confirmar, tu acceso será CERRADO PERMANENTEMENTE, sin posibilidad de retorno.",
+        modal_cancel: "Cancelar", modal_confirm: "Confirmar Reembolso"
+      }
+    };
+
+    let currentLang = 'pt';
+
+    function updateLanguage(lang) {
+      const t = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerHTML = t[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.placeholder = t[key];
+      });
+    }
+
+    document.getElementById('idioma').addEventListener('change', (e) => {
+      currentLang = e.target.value;
+      updateLanguage(currentLang);
+    });
+[01/10/2026 12:16] Maylson Campello: // ==========================================
+    // 2. CHATBOT COM RESPOSTAS INTELIGENTES
+    // ==========================================
+    const msgs = document.getElementById('chat-mensagens');
+    const input = document.getElementById('chat-input');
+    const enviar = document.getElementById('chat-enviar');
+
+    const chatResponses = {
+      pt: {
+        default: "Desculpe, não entendi. Posso ajudar com informações sobre planos, preços, reembolso ou horários.",
+        preço: "O Plano Individual custa R$ 49,99 e o Profissional R$ 80,00. Ambos são pagamento único com acesso vitalício! 💪",
+        plano: "Temos o Plano Individual (para alunos) e o Academia Profissional (para donos de academia).",
+        reembolso: "Oferecemos garantia de 7 dias. Se não gostar, seu dinheiro é devolvido, mas o acesso é encerrado permanentemente.",
+        horário: "Nossa plataforma e IA estão disponíveis 24 horas por dia, 7 dias por semana! 🕒",
+        oi: "Olá! Como posso ajudar você hoje?"
+      },
+      en: {
+        default: "Sorry, I didn't understand. I can help with info about plans, prices, refunds, or hours.",
+        preço: "The Individual Plan is $30 USD and the Professional is $79.99 USD. Both are one-time payments with lifetime access! 💪",
+        plano: "We have the Individual Plan (for students) and the Professional Gym (for gym owners).",
+        reembolso: "We offer a 7-day guarantee. If you don't like it, your money is refunded, but access is permanently terminated.",
+        horário: "Our platform and AI are available 24/7! 🕒",
+        oi: "Hello! How can I help you today?"
+      },
+      es: {
+        default: "Lo siento, no entendí. Puedo ayudar con información sobre planes, precios, reembolsos o horarios.",
+        preço: "El Plan Individual cuesta €28 EUR y el Profesional €69,99 EUR. ¡Ambos son pago único con acceso de por vida! 💪",
+        plano: "Tenemos el Plan Individual (para alumnos) y el Gimnasio Profesional (para dueños de gimnasios).",
+        reembolso: "Ofrecemos garantía de 7 días. Si no te gusta, tu dinero es devuelto, pero el acceso se cierra permanentemente.",
+        horário: "¡Nuestra plataforma e IA están disponibles 24/7! 🕒",
+        oi: "¡Hola! ¿Cómo puedo ayudarte hoy?"
+      }
+    };
+
+    function getAIResponse(input, lang) {
+      const lowerInput = input.toLowerCase();
+      const responses = chatResponses[lang];
+      
+      if (lowerInput.includes('preço')  lowerInput.includes('price')  lowerInput.includes('precio')  lowerInput.includes('valor')  lowerInput.includes('custa') || lowerInput.includes('cost')) return responses.preço;
+      if (lowerInput.includes('plano')  lowerInput.includes('plan')  lowerInput.includes('treino') || lowerInput.includes('workout')) return responses.plano;
+      if (lowerInput.includes('reembolso')  lowerInput.includes('refund')  lowerInput.includes('dinheiro')  lowerInput.includes('money')  lowerInput.includes('devolver')) return responses.reembolso;
+      if (lowerInput.includes('horário')  lowerInput.includes('hour')  lowerInput.includes('hora')  lowerInput.includes('24')  lowerInput.includes('aberto')) return responses.horário;
+      if (lowerInput.includes('oi')  lowerInput.includes('olá')  lowerInput.includes('hello')  lowerInput.includes('hola')  lowerInput.includes('hey')) return responses.oi;
+      
+      return responses.default;
+    }
+
+    function adicionarMensagem(texto, ehUsuario = false) {
+      const div = document.createElement('div');
+      div.className = p-3 rounded-lg max-w-[80%] ${ehUsuario ? 'bg-blue-100 ml-auto text-right' : 'bg-gray-100'};
+      div.textContent = texto;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    enviar.addEventListener('click', () => {
+[01/10/2026 12:16] Maylson Campello: const txt = input.value.trim();
+      if (!txt) return;
+      adicionarMensagem(txt, true);
+      input.value = '';
+      
+      const loadingId = 'loading-' + Date.now();
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = loadingId;
+      loadingDiv.className = 'p-3 rounded-lg max-w-[80%] bg-gray-100 italic text-gray-500';
+      loadingDiv.textContent = currentLang === 'pt' ? 'Digitando...' : (currentLang === 'en' ? 'Typing...' : 'Escribiendo...');
+      msgs.appendChild(loadingDiv);
+      msgs.scrollTop = msgs.scrollHeight;
+
+      setTimeout(() => {
+        const el = document.getElementById(loadingId);
+        if (el) el.remove();
+        const response = getAIResponse(txt, currentLang);
+        adicionarMensagem(response, false);
+      }, 1000);
+    });
+
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') enviar.click();
+    });
+
+    // ==========================================
+    // 3. SIMULAÇÃO DE COMPRA
+    // ==========================================
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const originalText = this.innerHTML;
+        this.innerHTML = currentLang === 'pt' ? 'Processando...' : (currentLang === 'en' ? 'Processing...' : 'Procesando...');
+        this.disabled = true;
+        this.classList.add('opacity-75', 'cursor-not-allowed');
+        
+        setTimeout(() => {
+          const successMsg = currentLang === 'pt' 
+            ? '✅ Compra realizada com sucesso! Verifique seu e-mail para acessar sua conta.' 
+            : (currentLang === 'en' 
+              ? '✅ Purchase successful! Check your email to access your account.' 
+              : '✅ ¡Compra realizada con éxito! Revisa tu correo electrónico para acceder a tu cuenta.');
+          alert(successMsg);
+          this.innerHTML = originalText;
+          this.disabled = false;
+          this.classList.remove('opacity-75', 'cursor-not-allowed');
+        }, 1500);
+      });
+    });
+
+    // ==========================================
+    // 4. ÁREA ADMIN PROTEGIDA
+    // ==========================================
+    document.getElementById('btnAdmin').addEventListener('click', () => {
+      const hints = {
+        pt: 'Digite a senha de administrador (dica: admin123):',
+        en: 'Enter admin password (hint: admin123):',
+        es: 'Ingresa la contraseña de administrador (pista: admin123):'
+      };
+      const password = prompt(hints[currentLang]);
+      if (password === 'admin123') {
+        const successMsg = currentLang === 'pt' 
+          ? '✅ Acesso concedido! Bem-vindo ao Painel Administrativo.\n\n(Esta é uma simulação. Em um app real, você veria métricas de alunos, faturamento e configurações.)' 
+          : (currentLang === 'en' 
+            ? '✅ Access granted! Welcome to the Admin Dashboard.\n\n(This is a simulation. In a real app, you would see student metrics, revenue, and settings.)' 
+            : '✅ ¡Acceso concedido! Bienvenido al Panel de Administración.\n\n(Esta es una simulación. En una app real, verías métricas de alumnos, facturación y configuraciones.)');
+        alert(successMsg);
+      } else if (password !== null) {
+        const errorMsg = currentLang === 'pt' ? '❌ Senha incorreta.' : (currentLang === 'en' ? '❌ Incorrect password.' : '❌ Contraseña incorrecta.');
+        alert(errorMsg);
+      }
+    });
+
+    // ==========================================
+    // 5. FLUXO DE REEMBOLSO COM BLOQUEIO
+    // ==========================================
+    const modal = document.getElementById('modal-reembolso');
+    document.getElementById('link-reembolso').addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.remove('hidden');
+    });
+    
+    document.getElementById('btn-cancelar-reembolso').addEventListener('click', () => {
+[01/10/2026 12:16] Maylson Campello: modal.classList.add('hidden');
+    });
+    
+    document.getElementById('btn-confirmar-reembolso').addEventListener('click', () => {
+      const successMsg = currentLang === 'pt' 
+        ? '✅ Reembolso solicitado! Seu acesso foi encerrado permanentemente.' 
+        : (currentLang === 'en' 
+          ? '✅ Refund requested! Your access has been permanently terminated.' 
+          : '✅ ¡Reembolso solicitado! Tu acceso ha sido cerrado permanentemente.');
+      alert(successMsg);
+      modal.classList.add('hidden');
+      
+      // Bloqueia a tela permanentemente simulando o encerramento da conta
+      document.body.innerHTML = 
+        <div class="flex flex-col items-center justify-center h-screen bg-gray-100 text-center p-4 font-sans">
+          <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md border-t-4 border-red-600">
+            <i class="fa fa-lock text-5xl text-red-600 mb-4"></i>
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">${currentLang === 'pt' ? 'Acesso Encerrado' : (currentLang === 'en' ? 'Access Terminated' : 'Acceso Cerrado')}</h1>
+            <p class="text-gray-600 mb-6">${currentLang === 'pt' ? 'Seu reembolso foi processado e sua conta foi desativada permanentemente conforme os termos de uso.' : (currentLang === 'en' ? 'Your refund has been processed and your account has been permanently deactivated according to the terms of use.' : 'Tu reembolso ha sido procesado y tu cuenta ha sido desactivada permanentemente según los términos de uso.')}</p>
+            <button onclick="location.reload()" class="px-6 py-3 bg-fit-primary text-white rounded-lg hover:opacity-90 transition font-semibold shadow-lg">
+              ${currentLang === 'pt' ? 'Voltar ao Início' : (currentLang === 'en' ? 'Return to Home' : 'Volver al Inicio')}
+            </button>
+          </div>
+        </div>
+      ;
+    });
+  </script>
+</body>
+</html>
