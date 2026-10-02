@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Treino | FIT GLOBAL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fit: { dark: '#0F172A', primary: '#FF3D00', secondary: '#10B981', light: '#F8FAFC' }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .gradient-fit { background: linear-gradient(135deg, #FF3D00 0%, #FF6D00 100%); }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Navegação -->
+  <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+    <div class="text-xl font-bold text-fit-primary">FIT GLOBAL <span class="text-gray-600 text-sm font-normal">| Meu Treino</span></div>
+    <div class="flex items-center gap-4">
+      <span id="user-email" class="text-sm text-gray-600 hidden md:inline">Carregando...</span>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+        <i class="fa fa-sign-out"></i> Sair
+      </button>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-4 py-8 max-w-5xl">
+    
+    <!-- TELA DE CADASTRO -->
+    <div id="tela-cadastro" class="hidden">
+      <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2 text-center">Bem-vindo à FIT GLOBAL! 🎉</h1>
+        <p class="text-gray-600 text-center mb-8">Vamos personalizar seu treino em menos de 1 minuto.</p>
+        
+        <form id="form-cadastro" class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold mb-2">Qual é o seu nome?</label>
+            <input type="text" id="nome-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none" placeholder="Ex: João Silva">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold mb-2">Qual é o seu objetivo principal?</label>
+            <select id="objetivo-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none">
+              <option value="">Selecione...</option>
+              <option value="hipertrofia">💪 Hipertrofia (Ganhar Massa)</option>
+              <option value="emagrecimento">🔥 Emagrecimento (Perder Peso)</option>
+              <option value="resistencia">🏃 Resistência (Condicionamento)</option>
+              <option value="mobilidade">🧘 Mobilidade e Flexibilidade</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold mb-2">Qual é o seu nível atual?</label>
+            <select id="nivel-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none">
+              <option value="">Selecione...</option>
+              <option value="iniciante">🌱 Iniciante (menos de 6 meses)</option>
+              <option value="intermediario">🌿 Intermediário (6 meses a 2 anos)</option>
+              <option value="avancado">🌳 Avançado (mais de 2 anos)</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold mb-2">Quantos dias por semana você pode treinar?</label>
+            <select id="dias-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none">
+              <option value="">Selecione...</option>
+              <option value="2">2 dias por semana</option>
+              <option value="3">3 dias por semana</option>
+              <option value="4">4 dias por semana</option>
+              <option value="5">5 dias por semana</option>
+              <option value="6">6 dias por semana</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="w-full gradient-fit text-white font-semibold py-4 rounded-lg hover:opacity-90 transition shadow-lg">
+            Gerar Meu Treino Personalizado 🚀
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TELA DO TREINO -->
+    <div id="tela-treino" class="hidden">
+      <div class="bg-gradient-to-r from-fit-primary to-orange-500 text-white rounded-2xl p-6 mb-6 shadow-lg">
+        <h1 class="text-2xl font-bold mb-1">Olá, <span id="nome-aluno-display">Aluno</span>! 👋</h1>
+        <p class="opacity-90">Seu treino está te esperando. Vamos evoluir juntos!</p>
+      </div>
+
+      <div id="alerta-evolucao" class="hidden bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg mb-6">
+        <div class="flex items-start gap-3">
+          <i class="fa fa-arrow-up text-yellow-600 text-xl mt-1"></i>
+          <div class="flex-1">
+            <h3 class="font-bold text-yellow-800">🎉 Hora de Evoluir!</h3>
+            <p class="text-yellow-700 text-sm mt-1">Você completou 2 meses de treino! Nosso sistema preparou uma versão mais avançada. Deseja atualizar?</p>
+            <div class="flex gap-2 mt-3">
+              <button onclick="aceitarEvolucao()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition">✅ Sim, atualizar</button>
+              <button onclick="recusarEvolucao()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-300 transition">⏸️ Manter atual</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-fit-primary">
+          <div class="text-gray-500 text-sm">Objetivo</div>
+          <div id="info-objetivo" class="text-xl font-bold mt-1">-</div>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-fit-secondary">
+          <div class="text-gray-500 text-sm">Nível</div>
+          <div id="info-nivel" class="text-xl font-bold mt-1">-</div>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-blue-500">
+          <div class="text-gray-500 text-sm">Próxima Evolução</div>
+          <div id="info-dias" class="text-xl font-bold mt-1">-</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-6">
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <i class="fa fa-calendar text-fit-primary"></i> Seus Treinos da Semana
+        </h2>
+        <div id="lista-treinos" class="space-y-4"></div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-6 mt-6">
+        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
+          <i class="fa fa-bolt text-yellow-500"></i> Novidades da Semana
+        </h2>
+        <p class="text-gray-600 text-sm mb-4">Exercícios modernos selecionados pela nossa IA</p>
+        <div id="novidades-semana" class="grid md:grid-cols-3 gap-4"></div>
+      </div>
+
+      <div class="bg-gradient-to-br from-fit-primary to-orange-500 rounded-2xl shadow-lg p-6 mt-6 text-white">
+        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
+          <i class="fa fa-magic"></i> Assistente IA FIT GLOBAL
+        </h2>
+        <p class="opacity-90 text-sm mb-4">Peça treinos novos, tire dúvidas ou peça substituições</p>
+        
+        <div class="flex flex-wrap gap-2 mb-4">
+          <button onclick="gerarNovoTreinoIA()" class="bg-white/20 hover:bg-white/30 backdrop-blur px-4 py-2 rounded-lg text-sm font-semibold transition">🔄 Gerar Treino Novo</button>
+          <button onclick="abrirChatIA()" class="bg-white/20 hover:bg-white/30 backdrop-blur px-4 py-2 rounded-lg text-sm font-semibold transition">💬 Tirar Dúvida</button>
+        </div>
+
+        <div id="chat-ia-container" class="hidden bg-white rounded-xl p-4 text-gray-800">
+          <div id="chat-ia-mensagens" class="h-48 overflow-y-auto mb-3 space-y-2 text-sm">
+            <div class="bg-gray-100 p-2 rounded-lg">Olá! 👋 Como posso te ajudar com seu treino hoje?</div>
+          </div>
+          <div class="flex gap-2">
+            <input id="chat-ia-input" type="text" placeholder="Ex: Como executar o Bulgarian Split Squat?" class="flex-1 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-fit-primary/50">
+            <button onclick="enviarChatIA()" class="bg-fit-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition">Enviar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 text-center">
+        <button onclick="resetarTreino()" class="text-sm text-gray-500 hover:text-red-600 transition">
+          <i class="fa fa-refresh"></i> Recomeçar do zero (alterar objetivo/nível)
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Confirmação -->
+  <div id="modal-confirmacao" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+      <h3 class="text-xl font-bold text-fit-primary mb-4 flex items-center gap-2">
+        <i class="fa fa-arrow-up"></i> Confirmar Evolução do Treino
+      </h3>
+      <p class="mb-2 text-gray-700">Você está prestes a atualizar seu treino para o nível <strong id="modal-nivel-novo">intermediário</strong>.</p>
+      <p class="mb-4 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+        <strong>O que muda?</strong> Mais séries, mais carga, exercícios mais avançados. Seu corpo está pronto! 💪
+      </p>
+      <div class="flex gap-3">
+        <button onclick="fecharModal()" class="flex-1 py-3 border rounded-lg hover:bg-gray-100 transition font-medium">Cancelar</button>
+        <button onclick="confirmarEvolucao()" class="flex-1 py-3 bg-fit-primary text-white rounded-lg hover:opacity-90 transition font-semibold">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- TODA A LÓGICA (Treinos + IA) AGORA ESTÁ DENTRO DESTE ARQUIVO -->
+  <!-- ========================================================= -->
+  <script>
+    console.log("✅ Script do aluno.html carregado com sucesso!");
+
+    // 1. BASE DE DADOS DE TREINOS (Inline para evitar erro 404)
+    const exercicios = {
+      hipertrofia: {
+        iniciante: { fullbody: [{ nome: "Agachamento Goblet", series: 3, reps: "10-12", descanso: "60s", nota: "Foco em técnica" }, { nome: "Supino com Halteres", series: 3, reps: "10-12", descanso: "60s" }, { nome: "Remada Curvada", series: 3, reps: "10-12", descanso: "60s" }, { nome: "Prancha", series: 3, reps: "30s", descanso: "30s" }] },
+        intermediario: { upper: [{ nome: "Supino Reto", series: 4, reps: "8-10", descanso: "90s" }, { nome: "Remada Cavaleiro", series: 4, reps: "8-10", descanso: "90s" }, { nome: "Elevação Lateral", series: 4, reps: "12-15", descanso: "60s" }], lower: [{ nome: "Agachamento Livre", series: 4, reps: "8-10", descanso: "120s" }, { nome: "Stiff", series: 4, reps: "8-10", descanso: "90s" }, { nome: "Leg Press", series: 3, reps: "10-12", descanso: "90s" }] },
+        avancado: { push: [{ nome: "Supino Reto Pesado", series: 5, reps: "5-6", descanso: "180s" }, { nome: "Desenvolvimento Militar", series: 4, reps: "8-10", descanso: "90s" }], pull: [{ nome: "Barra Fixa", series: 5, reps: "5-6", descanso: "180s" }, { nome: "Remada Curvada", series: 4, reps: "8-10", descanso: "90s" }], legs: [{ nome: "Agachamento Livre",
+        series: 5, reps: "5-6", descanso: "180s" }, { nome: "Leg Press", series: 4, reps: "10-12", descanso: "120s" }] }
+      },
+      emagrecimento: {
+        iniciante: { funcional: [{ nome: "Agachamento", series: 3, reps: "15", descanso: "30s" }, { nome: "Flexão (joelhos)", series: 3, reps: "10", descanso: "30s" }, { nome: "Prancha", series: 3, reps: "30s", descanso: "30s" }], cardio: [{ nome: "Caminhada Rápida", series: 1, reps: "30 min", descanso: "-" }] },
+        intermediario: { hiit: [{ nome: "Burpee", series: 4, reps: "40s", descanso: "20s" }, { nome: "Mountain Climber", series: 4, reps: "40s", descanso: "20s" }], forca: [{ nome: "Agachamento com Halteres", series: 3, reps: "15", descanso: "60s" }] },
+        avancado: { metcon: [{ nome: "Thruster", series: 5, reps: "12", descanso: "30s" }, { nome: "Burpee com Salto", series: 5, reps: "10", descanso: "30s" }] }
+      },
+      resistencia: { iniciante: { circuito: [{ nome: "Agachamento", series: 3, reps: "20", descanso: "20s" }, { nome: "Flexão", series: 3, reps: "15", descanso: "20s" }, { nome: "Prancha", series: 3, reps: "40s", descanso: "20s" }] } },
+      mobilidade: { geral: [{ nome: "Cat-Cow Stretch", series: 2, reps: "10 ciclos", descanso: "-" }, { nome: "90/90 Hip Stretch", series: 2, reps: "30s cada lado", descanso: "-" }, { nome: "Deep Squat Hold", series: 3, reps: "30s", descanso: "30s" }] }
+    };
+
+    const divisoesTreino = { 2: ["Full Body A", "Full Body B"], 3: ["Full Body A", "Full Body B", "Full Body C"], 4: ["Upper A", "Lower A", "Upper B", "Lower B"], 5: ["Push", "Pull", "Legs", "Upper", "Lower"], 6: ["Push", "Pull", "Legs", "Push", "Pull", "Legs"] };
+
+    function gerarTreino(objetivo, nivel, diasPorSemana) {
+      const base = exercicios[objetivo]?.[nivel] || exercicios.hipertrofia.iniciante;
+      const divisao = divisoesTreino[diasPorSemana] || divisoesTreino[3];
+      const treino = { dataCriacao: new Date().toISOString(), objetivo, nivel, diasPorSemana, divisao, treinos: {} };
+      
+      divisao.forEach((dia, index) => {
+        if (objetivo === 'hipertrofia' && nivel === 'intermediario') {
+          treino.treinos[Dia ${index + 1}] = dia.includes("Upper") ? [...base.upper] : [...base.lower];
+        } else if (objetivo === 'hipertrofia' && nivel === 'avancado') {
+          const tipos = ["push", "pull", "legs"];
+          treino.treinos[Dia ${index + 1}] = [...base[tipos[index % 3]]];
+        } else if (objetivo === 'emagrecimento' && nivel !== 'iniciante' && index % 2 !== 0) {
+          treino.treinos[Dia ${index + 1}] = [...(base.forca || base.funcional)];
+        } else {
+          const chave = Object.keys(base)[0];
+          treino.treinos[Dia ${index + 1}] = [...base[chave]];
+        }
+      });
+      return treino;
+    }
+
+    function evoluirTreino(treinoAtual) {
+      const meses = (new Date() - new Date(treinoAtual.dataCriacao)) / (1000 * 60 * 60 * 24 * 30);
+      if (meses < 2) return null;
+      let novoNivel = treinoAtual.nivel === "iniciante" ? "intermediario" : (treinoAtual.nivel === "intermediario" ? "avancado" : "avancado");
+      const novo = gerarTreino(treinoAtual.objetivo, novoNivel, treinoAtual.diasPorSemana);
+      novo.dataCriacao = treinoAtual.dataCriacao;
+      novo.nivelAnterior = treinoAtual.nivel;
+      return novo;
+    }
+
+    function diasParaProximaEvolucao(treino) {
+      const dias = Math.floor((new Date() - new Date(treino.dataCriacao)) / (1000 * 60 * 60 * 24));
+      return Math.max(0, 60 - dias);
+    }
+
+    // 2. NOVIDADES DA SEMANA
+    const exerciciosTendencia = [
+      { nome: "Zercher Squat", nota: "Tendência 2026 - fortalece core e quadríceps" },
+      { nome: "ATG Split Squat", nota: "Método Knees Over Toes Guy" },
+      { nome: "Nordic Hamstring Curl", nota: "Fortalecimento excêntrico de isquiotibiais" },
+      { nome: "Turkish Get-Up", nota: "Exercício completo com kettlebell" },
+      { nome: "Blood Flow Restriction (BFR)", nota: "Treino com restrição de fluxo" }
+    ];
+    function getNovidadesSemana() {
+      const semana = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
+      const inicio = (semana * 3) % exerciciosTendencia.length;
+      return [exerciciosTendencia[inicio % exerciciosTendencia.length], exerciciosTendencia[(inicio + 1) % exerciciosTendencia.length], exerciciosTendencia[(inicio + 2) % exerciciosTendencia.length]];
+    }
+
+    // 3. LÓGICA DA INTERFACE
+    let usuarioAtual = null;
+    let treinoAtual = null;
+    let treinoSugerido = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            document.getElementById('user-email').textContent = "Visitante";
+            document.getElementById('tela-cadastro').classList.remove('hidden');
+          } else {
+            usuarioAtual = user;
+            document.getElementById('user-email').textContent = user.email;
+            carregarDadosAluno();
+          }
+        });
+      } else {
+        document.getElementById('tela-cadastro').classList.remove('hidden');
+      }
+    });
+
+    function logout() {
+      if (window.netlifyIdentity) window.netlifyIdentity.logout();
+      window.location.href = "index.html";
+    }
+
+    function carregarDadosAluno() {
+      try {
+        const chave = usuarioAtual ? aluno_${usuarioAtual.email} : 'aluno_demo';
+        const dados = localStorage.getItem(chave);
+        if (dados) {
+          treinoAtual = JSON.parse(dados);
+          mostrarTelaTreino();
+        } else {
+          document.getElementById('tela-cadastro').classList.remove('hidden');
+        }
+      } catch (e) {
+        console.error("Erro ao carregar dados:", e);
+        document.getElementById('tela-cadastro').classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('form-cadastro').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome-aluno').value;
+      const objetivo = document.getElementById('objetivo-aluno').value;
+      const nivel = document.getElementById('nivel-aluno').value;
+      const dias = parseInt(document.getElementById('dias-aluno').value);
+      
+      treinoAtual = gerarTreino(objetivo, nivel, dias);
+      treinoAtual.nomeAluno = nome;
+      treinoAtual.emailAluno = usuarioAtual ? usuarioAtual.email : 'demo@fitglobal.com';
+      
+      try {
+        const chave = treinoAtual.emailAluno ? aluno_${treinoAtual.emailAluno} : 'aluno_demo';
+        localStorage.setItem(chave, JSON.stringify(treinoAtual));
+      } catch (e) {
+        console.error("Erro ao salvar no localStorage:", e);
+        alert("Não foi possível salvar o treino. Verifique se o armazenamento local do navegador está habilitado.");
+      }
+      
+      mostrarTelaTreino();
+    });
+
+    function mostrarTelaTreino() {
+      document.getElementById('tela-cadastro').classList.add('hidden');
+      document.getElementById('tela-treino').classList.remove('hidden');
+      
+      document.getElementById('nome-aluno-display').textContent = treinoAtual.nomeAluno;
+      const objNames = { hipertrofia: "💪 Hipertrofia", emagrecimento: "🔥 Emagrecimento", resistencia: "🏃 Resistência", mobilidade: "🧘 Mobilidade" };
+      const nivNames = { iniciante: "🌱 Iniciante", intermediario: "🌿 Intermediário", avancado: "🌳 Avançado" };
+      
+      document.getElementById('info-objetivo').textContent = objNames[treinoAtual.objetivo];
+      document.getElementById('info-nivel').textContent = nivNames[treinoAtual.nivel];
+      
+      const diasEvolucao = diasParaProximaEvolucao(treinoAtual);
+      document.getElementById('info-dias').textContent = diasEvolucao === 0 ? "Disponível!" : ${diasEvolucao} dias;
+      if (diasEvolucao === 0 && treinoAtual.nivel !== "avancado") {
+        treinoSugerido = evoluirTreino(treinoAtual);
+        if (treinoSugerido) document.getElementById('alerta-evolucao').classList.remove('hidden');
+      }
+      
+      renderizarTreinos();
+      renderizarNovidades();
+    }
+
+    function renderizarTreinos() {
+      const container = document.getElementById('lista-treinos');
+      container.innerHTML = '';
+      Object.keys(treinoAtual.treinos).forEach(dia => {
+        const exs = treinoAtual.treinos[dia];
+        let html = `<div c

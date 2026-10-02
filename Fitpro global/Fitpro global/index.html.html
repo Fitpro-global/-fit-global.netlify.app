@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIT GLOBAL | Academia Completa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fit: { dark: '#0F172A', primary: '#FF3D00', secondary: '#10B981', light: '#F8FAFC' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-fit { background: linear-gradient(135deg, #FF3D00 0%, #FF6D00 100%); }
+  </style>
+</head>
+<body class="bg-fit-light font-sans text-fit-dark">
+
+  <!-- Navegação -->
+  <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-fit-primary">FIT GLOBAL</a>
+      <div class="hidden md:flex gap-8">
+        <a href="#planos" class="hover:text-fit-primary transition">Planos</a>
+        <a href="#ajuda" class="hover:text-fit-primary transition">Ajuda</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <select id="idioma" class="bg-gray-100 border-0 rounded px-2 py-1 text-sm cursor-pointer">
+          <option value="pt">🇧🇷 PT</option>
+          <option value="en">🇸 EN</option>
+          <option value="es">🇪🇸 ES</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 px-4">
+    <div class="container mx-auto text-center">
+      <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-bold mb-6">
+        Sua Academia <span class="text-fit-primary">No Mundo Todo</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+        Treinos personalizados, IA de atendimento, evolução completa. Pagamento único, acesso vitalício.
+      </p>
+      <a href="#planos" class="inline-block gradient-fit text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+        Ver Planos 👇
+      </a>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section id="planos" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-16">Escolha Seu Plano</h2>
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Plano Individual -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-fit-secondary hover:shadow-2xl transition duration-300">
+          <h3 class="text-2xl font-bold mb-4">Plano Individual</h3>
+          <div class="mb-6">
+            <div class="text-3xl font-bold">R$ 49,99</div>
+            <div class="text-gray-500">$ 30 USD • € 28,99 EUR</div>
+            <div class="text-sm text-fit-secondary mt-1 font-medium">Pagamento Único • Acesso Vitalício ✅</div>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span>Treinos personalizados</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span>Acompanhamento de evolução</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span>IA 24h tirando dúvidas</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-secondary mt-1"></i> <span>Acesso em todos os idiomas</span></li>
+          </ul>
+          <button class="buy-btn w-full py-3 rounded-lg bg-fit-secondary text-white font-semibold hover:bg-green-600 transition" data-plan="individual">
+            Comprar Individual
+          </button>
+        </div>
+        <!-- Academia Profissional -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-fit-primary relative overflow-hidden hover:shadow-2xl transition duration-300">
+          <div class="absolute top-4 right-4 bg-fit-primary text-white text-xs px-3 py-1 rounded-full font-bold">MAIS COMPLETO</div>
+          <h3 class="text-2xl font-bold mb-4">Academia Profissional</h3>
+          <div class="mb-6">
+            <div class="text-3xl font-bold">R$ 79,99</div>
+            <div class="text-gray-500">$ 54,99 USD • € 52,99 EUR</div>
+            <div class="text-sm text-fit-primary mt-1 font-medium">Pagamento Único • Acesso Vitalício ✅</div>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span>Tudo do Plano Individual</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span>Gestão de alunos</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span>Relatórios e estatísticas</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span>Marca personalizada</span></li>
+            <li class="flex items-start gap-2"><i class="fa fa-check text-fit-primary mt-1"></i> <span>Suporte prioritário</span></li>
+          </ul>
+          <button class="buy-btn w-full py-3 rounded-lg gradient-fit text-white font-semibold hover:opacity-90 transition" data-plan="profissional">
+            Comprar Profissional
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot -->
+  <section id="ajuda" class="py-20">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="text-2xl font-bold text-center mb-8">Assistente IA — Tire Suas Dúvidas</h2>
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+        <div id="chat-mensagens" class="h-64 overflow-y-auto mb-4 space-y-3 p-3 bg-gray-50 rounded-lg">
+          <div class="bg-gray-100 p-3 rounded-lg max-w-[80%]">
+            Olá! 👋 Sou a assistente da FIT GLOBAL. Como posso te ajudar hoje?
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <input id="chat-input" type="text" placeholder="Digite sua dúvida..." class="flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-fit-primary/50">
+          <button id="chat-enviar" class="px-6 py-3 bg-fit-primary text-white rounded-lg hover:opacity-90 transition font-medium">
+            Enviar
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="bg-fit-dark text-white py-10">
+    <div class="container mx-auto px-4 text-center">
+      <p>FIT GLOBAL © 2026 — Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <script>
+    // Links de Pagamento
+    const paymentLinks = {
+      individual: {
+        br: "https://mpago.la/2juBg1D",
+        pt: "https://buy.stripe.com/test_eVq4gBeeubCqgG0bff1Fe00",
+        en: "https://buy.stripe.com/test_dRm14p0nE7ma2Pa2IJ1Fe01",
+        es: "https://buy.stripe.com/test_eVq4gBeeubCqgG0bff1Fe00"
+      },
+      profissional: {
+        br: "https://mpago.la/2hLHx3u",
+        pt: "https://buy.stripe.com/test_6oU00lgmC0XMahCgzz1Fe02",
+        en: "https://buy.stripe.com/test_6oU6oJ9YecGuahC5UV1Fe03",
+        es: "https://buy.stripe.com/test_6oU00lgmC0XMahCgzz1Fe02"
+      }
+    };
+
+    // Sistema de Pagamento
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const planType = this.getAttribute('data-plan');
+        const isBrazil = confirm("Você está no Brasil?\n\nOK = Mercado Pago (PIX/Cartão)\nCancelar = Stripe (Internacional)");
+        
+        const targetUrl = isBrazil 
+          ? paymentLinks[planType].br 
+          : paymentLinks[planType].pt;
+        
+        window.location.href = targetUrl;
+      });
+    });
+    // Chatbot
+    const msgs = document.getElementById('chat-mensagens');
+    const input = document.getElementById('chat-input');
+    const enviar = document.getElementById('chat-enviar');
+
+    const chatResponses = {
+      pt: { 
+        default: "Desculpe, não entendi. Posso ajudar com planos, preços ou reembolso.", 
+        preço: "O Plano Individual custa R$ 49,99 e o Profissional R$ 79,99. Pagamento único! 💪", 
+        plano: "Temos o Plano Individual e o Academia Profissional.", 
+        reembolso: "Garantia de 7 dias. Acesso encerrado permanentemente ao reembolsar.", 
+        horário: "Disponível 24 horas por dia, 7 dias por semana! 🕒", 
+        oi: "Olá! Como posso ajudar você hoje?" 
+      }
+    };
+
+    function getAIResponse(txt) {
+      const lower = txt.toLowerCase();
+      const r = chatResponses.pt;
+      
+      if (lower.includes('preço')  lower.includes('price')  lower.includes('valor') || lower.includes('custa')) {
+        return r.preço;
+      }
+      if (lower.includes('plano') || lower.includes('treino')) {
+        return r.plano;
+      }
+      if (lower.includes('reembolso') || lower.includes('dinheiro')) {
+        return r.reembolso;
+      }
+      if (lower.includes('horário')  lower.includes('hora')  lower.includes('24')) {
+        return r.horário;
+      }
+      if (lower.includes('oi')  lower.includes('olá')  lower.includes('hello')) {
+        return r.oi;
+      }
+      
+      return r.default;
+    }
+
+    function adicionarMensagem(texto, ehUsuario = false) {
+      const div = document.createElement('div');
+      div.className = p-3 rounded-lg max-w-[80%] ${ehUsuario ? 'bg-blue-100 ml-auto text-right' : 'bg-gray-100'};
+      div.textContent = texto;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    enviar.addEventListener('click', () => {
+      const txt = input.value.trim();
+      if (!txt) return;
+      adicionarMensagem(txt, true);
+      input.value = '';
+      
+      setTimeout(() => {
+        adicionarMensagem(getAIResponse(txt), false);
+      }, 500);
+    });
+
+    input.addEventListener('keypress', (e) => { 
+      if (e.key === 'Enter') enviar.click(); 
+    });
+
+    console.log('✅ Site FIT GLOBAL carregado com sucesso!');
+  </script>
+</body>
+</html>
