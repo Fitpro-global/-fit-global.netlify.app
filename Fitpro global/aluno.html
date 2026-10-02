@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Treino | FIT GLOBAL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="/treinos.js"></script>
+  <script src="/ia-treinos.js"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fit: { dark: '#0F172A', primary: '#FF3D00', secondary: '#10B981', light: '#F8FAFC' }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .gradient-fit { background: linear-gradient(135deg, #FF3D00 0%, #FF6D00 100%); }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+    <div class="text-xl font-bold text-fit-primary">FIT GLOBAL <span class="text-gray-600 text-sm font-normal">| Meu Treino</span></div>
+    <div class="flex items-center gap-4">
+      <span id="user-email" class="text-sm text-gray-600 hidden md:inline">Carregando...</span>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+        <i class="fa fa-sign-out"></i> Sair
+      </button>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-4 py-8 max-w-5xl">
+    
+    <div id="tela-cadastro" class="hidden">
+      <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2 text-center">Bem-vindo à FIT GLOBAL! 🎉</h1>
+        <p class="text-gray-600 text-center mb-8">Vamos personalizar seu treino em menos de 1 minuto.</p>
+        
+        <form id="form-cadastro" class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold mb-2">Qual é o seu nome?</label>
+            <input type="text" id="nome-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none" placeholder="Ex: João Silva">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold mb-2">Qual é o seu objetivo principal?</label>
+            <select id="objetivo-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none">
+              <option value="">Selecione...</option>
+              <option value="hipertrofia">💪 Hipertrofia (Ganhar Massa Muscular)</option>
+              <option value="emagrecimento">🔥 Emagrecimento (Perder Peso)</option>
+              <option value="resistencia">🏃 Resistência (Condicionamento Físico)</option>
+              <option value="mobilidade">🧘 Mobilidade e Flexibilidade (Novo!)</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold mb-2">Qual é o seu nível atual?</label>
+            <select id="nivel-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none">
+              <option value="">Selecione...</option>
+              <option value="iniciante">🌱 Iniciante (menos de 6 meses)</option>
+              <option value="intermediario">🌿 Intermediário (6 meses a 2 anos)</option>
+              <option value="avancado">🌳 Avançado (mais de 2 anos)</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold mb-2">Quantos dias por semana você pode treinar?</label>
+            <select id="dias-aluno" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-fit-primary/50 focus:outline-none">
+              <option value="">Selecione...</option>
+              <option value="2">2 dias por semana</option>
+              <option value="3">3 dias por semana</option>
+              <option value="4">4 dias por semana</option>
+              <option value="5">5 dias por semana</option>
+              <option value="6">6 dias por semana</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="w-full gradient-fit text-white font-semibold py-4 rounded-lg hover:opacity-90 transition shadow-lg">
+            Gerar Meu Treino Personalizado 🚀
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="tela-treino" class="hidden">
+      
+      <div class="bg-gradient-to-r from-fit-primary to-orange-500 text-white rounded-2xl p-6 mb-6 shadow-lg">
+        <h1 class="text-2xl font-bold mb-1">Olá, <span id="nome-aluno-display">Aluno</span>! 👋</h1>
+        <p class="opacity-90">Seu treino está te esperando. Vamos evoluir juntos!</p>
+      </div>
+
+      <div id="alerta-evolucao" class="hidden bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg mb-6">
+        <div class="flex items-start gap-3">
+          <i class="fa fa-arrow-up text-yellow-600 text-xl mt-1"></i>
+          <div class="flex-1">
+            <h3 class="font-bold text-yellow-800">🎉 Hora de Evoluir!</h3>
+            <p class="text-yellow-700 text-sm mt-1">Você completou 2 meses de treino! Nosso sistema preparou uma versão mais avançada para você. Deseja atualizar?</p>
+            <div class="flex gap-2 mt-3">
+              <button onclick="aceitarEvolucao()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition">
+                ✅ Sim, atualizar treino
+              </button>
+              <button onclick="recusarEvolucao()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-300 transition">
+                ⏸️ Manter atual
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-fit-primary">
+          <div class="text-gray-500 text-sm">Objetivo</div>
+          <div id="info-objetivo" class="text-xl font-bold mt-1">-</div>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-fit-secondary">
+          <div class="text-gray-500 text-sm">Nível</div>
+          <div id="info-nivel" class="text-xl font-bold mt-1">-</div>
+        </div>
+        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-blue-500">
+          <div class="text-gray-500 text-sm">Próxima Evolução</div>
+          <div id="info-dias" class="text-xl font-bold mt-1">-</div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-6">
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <i class="fa fa-calendar text-fit-primary"></i> Seus Treinos da Semana
+        </h2>
+        <div id="lista-treinos" class="space-y-4"></div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-6 mt-6">
+        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
+          <i class="fa fa-bolt text-yellow-500"></i> Novidades da Semana
+        </h2>
+        <p class="text-gray-600 text-sm mb-4">Exercícios modernos selecionados pela nossa IA para você experimentar</p>
+        <div id="novidades-semana" class="grid md:grid-cols-3 gap-4"></div>
+      </div>
+
+      <div class="bg-gradient-to-br from-fit-primary to-orange-500 rounded-2xl shadow-lg p-6 mt-6 text-white">
+        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
+          <i class="fa fa-magic"></i> Assistente IA FIT GLOBAL
+        </h2>
+        <p class="opacity-90 text-sm mb-4">Peça treinos novos, tire dúvidas ou peça substituições de exercícios</p>
+         <div class="flex flex-wrap gap-2 mb-4">
+          <button onclick="gerarNovoTreinoIA()" class="bg-white/20 hover:bg-white/30 backdrop-blur px-4 py-2 rounded-lg text-sm font-semibold transition">
+            🔄 Gerar Treino Novo
+          </button>
+          <button onclick="abrirChatIA()" class="bg-white/20 hover:bg-white/30 backdrop-blur px-4 py-2 rounded-lg text-sm font-semibold transition">
+            💬 Tirar Dúvida
+          </button>
+          <button onclick="pedirSubstituicao()" class="bg-white/20 hover:bg-white/30 backdrop-blur px-4 py-2 rounded-lg text-sm font-semibold transition">
+            🔁 Substituir Exercício
+          </button>
+        </div>
+
+        <div id="chat-ia-container" class="hidden bg-white rounded-xl p-4 text-gray-800">
+          <div id="chat-ia-mensagens" class="h-48 overflow-y-auto mb-3 space-y-2 text-sm">
+            <div class="bg-gray-100 p-2 rounded-lg">Olá! 👋 Como posso te ajudar com seu treino hoje?</div>
+          </div>
+          <div class="flex gap-2">
+            <input id="chat-ia-input" type="text" placeholder="Ex: Como executar o Bulgarian Split Squat?" class="flex-1 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-fit-primary/50">
+            <button onclick="enviarChatIA()" class="bg-fit-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 text-center">
+        <button onclick="resetarTreino()" class="text-sm text-gray-500 hover:text-red-600 transition">
+          <i class="fa fa-refresh"></i> Recomeçar do zero (alterar objetivo/nível)
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div id="modal-confirmacao" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+      <h3 class="text-xl font-bold text-fit-primary mb-4 flex items-center gap-2">
+        <i class="fa fa-arrow-up"></i> Confirmar Evolução do Treino
+      </h3>
+      <p class="mb-2 text-gray-700">Você está prestes a atualizar seu treino para o nível <strong id="modal-nivel-novo">intermediário</strong>.</p>
+      <p class="mb-4 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+        <strong>O que muda?</strong> Mais séries, mais carga, exercícios mais avançados. Seu corpo está pronto para esse desafio! 💪
+      </p>
+      <p class="mb-6 text-sm text-gray-500">Seu treino anterior será substituído. Você pode voltar ao nível anterior a qualquer momento.</p>
+      <div class="flex gap-3">
+        <button onclick="fecharModal()" class="flex-1 py-3 border rounded-lg hover:bg-gray-100 transition font-medium">Cancelar</button>
+        <button onclick="confirmarEvolucao()" class="flex-1 py-3 bg-fit-primary text-white rounded-lg hover:opacity-90 transition font-semibold">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let usuarioAtual = null;
+    let treinoAtual = null;
+    let treinoSugerido = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            alert("Faça login para acessar seu treino.");
+            window.location.href = "index.html";
+          } else {
+            usuarioAtual = user;
+            document.getElementById('user-email').textContent = user.email;
+            carregarDadosAluno();
+          }
+        });
+      }
+    });
+
+    function logout() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.logout();
+        window.location.href = "index.html";
+      }
+    }
+
+    function carregarDadosAluno() {
+      const chaveAluno = aluno_${usuarioAtual.email};
+       const dadosSalvos = localStorage.getItem(chaveAluno);
+      
+      if (dadosSalvos) {
+        treinoAtual = JSON.parse(dadosSalvos);
+        mostrarTelaTreino();
+      } else {
+        document.getElementById('tela-cadastro').classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('form-cadastro').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const nome = document.getElementById('nome-aluno').value;
+      const objetivo = document.getElementById('objetivo-aluno').value;
+      const nivel = document.getElementById('nivel-aluno').value;
+      const dias = parseInt(document.getElementById('dias-aluno').value);
+      
+      treinoAtual = gerarTreino(objetivo, nivel, dias);
+      treinoAtual.nomeAluno = nome;
+      treinoAtual.emailAluno = usuarioAtual.email;
+      
+      const chaveAluno = aluno_${usuarioAtual.email};
+      localStorage.setItem(chaveAluno, JSON.stringify(treinoAtual));
+      
+      salvarNaListaAlunos(treinoAtual);
+      
+      mostrarTelaTreino();
+    });
+
+    function salvarNaListaAlunos(treino) {
+      let lista = JSON.parse(localStorage.getItem('lista_alunos') || '[]');
+      const indice = lista.findIndex(a => a.emailAluno === treino.emailAluno);
+      
+      if (indice >= 0) {
+        lista[indice] = treino;
+      } else {
+        lista.push(treino);
+      }
+      
+      localStorage.setItem('lista_alunos', JSON.stringify(lista));
+    }
+
+    function mostrarTelaTreino() {
+      document.getElementById('tela-cadastro').classList.add('hidden');
+      document.getElementById('tela-treino').classList.remove('hidden');
+      
+      document.getElementById('nome-aluno-display').textContent = treinoAtual.nomeAluno;
+      
+      const objetivosNomes = {
+        hipertrofia: "💪 Hipertrofia",
+        emagrecimento: "🔥 Emagrecimento",
+        resistencia: "🏃 Resistência",
+        mobilidade: "🧘 Mobilidade"
+      };
+      const niveisNomes = {
+        iniciante: "🌱 Iniciante",
+        intermediario: "🌿 Intermediário",
+        avancado: "🌳 Avançado"
+      };
+      
+      document.getElementById('info-objetivo').textContent = objetivosNomes[treinoAtual.objetivo];
+      document.getElementById('info-nivel').textContent = niveisNomes[treinoAtual.nivel];
+      
+      const diasParaEvolucao = diasParaProximaEvolucao(treinoAtual);
+      document.getElementById('info-dias').textContent = diasParaEvolucao === 0 ? "Disponível!" : ${diasParaEvolucao} dias;
+      
+      if (diasParaEvolucao === 0 && treinoAtual.nivel !== "avancado") {
+        treinoSugerido = evoluirTreino(treinoAtual);
+        if (treinoSugerido) {
+          document.getElementById('alerta-evolucao').classList.remove('hidden');
+        }
+      }
+      
+      renderizarTreinos();
+      if (typeof getNovidadesSemana === 'function') {
+        setTimeout(renderizarNovidades, 500);
+      }
+    }
+
+    function renderizarTreinos() {
+      const container = document.getElementById('lista-treinos');
+      container.innerHTML = '';
+      
+      Object.keys(treinoAtual.treinos).forEach(dia => {
+        const exerciciosDia = treinoAtual.treinos[dia];
+        
+        const card = document.createElement('div');
+        card.className = 'border border-gray-200 rounded-xl p-5 hover:shadow-md transition';
+        
+        let html = 
+          <div class="flex justify-between items-center mb-4 pb-3 border-b">
+            <h3 class="text-lg font-bold text-fit-primary">${dia}</h3>
+            <span class="text-xs bg-gray-100 px-3 py-1 rounded-full">${treinoAtual.divisao[Object.keys(treinoAtual.treinos).indexOf(dia)]}</span>
+          </div>
+          <div class="space-y-3">
+        ;
+        
+        exerciciosDia.forEach((ex, i) => {
+          html += `
+            <div class="flex items-start gap-3 pb-3 ${i < exerciciosDia.length - 1 ? 'border-b border-gray-100' : ''}">
+             <div class="w-8 h-8 bg-fit-primary/10 text-fit-primary rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+                ${i + 1}
+              </div>
+              <div class="flex-1">
+                <div class="font-semibold text-gray-800">${ex.nome}</div>
+                <div class="text-sm text-gray-500 mt-1">
+                  ${ex.series} séries × ${ex.reps} reps • Descanso: ${ex.descanso}
+                </div>
+                ${ex.nota ? <div class="text-xs text-fit-primary mt-1 italic">${ex.nota}</div> : ''}
+              </div>
+            </div>
+          ;
+        });
+        
+        html += </div>;
+        card.innerHTML = html;
+        container.appendChild(card);
+      });
+    }
+
+    function aceitarEvolucao() {
+      const niveisNomes = {
+        iniciante: "iniciante",
+        intermediario: "intermediário",
+        avancado: "avançado"
+      };
+      document.getElementById('modal-nivel-novo').textContent = niveisNomes[treinoSugerido.nivel];
+      document.getElementById('modal-confirmacao').classList.remove('hidden');
+    }
+
+    function fecharModal() {
+      document.getElementById('modal-confirmacao').classList.add('hidden');
+    }
+
+    function confirmarEvolucao() {
+      treinoAtual = treinoSugerido;
+      treinoSugerido = null;
+      
+      const chaveAluno = aluno_${usuarioAtual.email};
+      localStorage.setItem(chaveAluno, JSON.stringify(treinoAtual));
+      salvarNaListaAlunos(treinoAtual);
+      
+      fecharModal();
+      document.getElementById('alerta-evolucao').classList.add('hidden');
+      mostrarTelaTreino();
+      
+      alert("✅ Treino atualizado com sucesso! Bom treino!");
+    }
+
+    function recusarEvolucao() {
+      const dataAtual = new Date(treinoAtual.dataCriacao);
+      dataAtual.setDate(dataAtual.getDate() + 30);
+      treinoAtual.dataCriacao = dataAtual.toISOString();
+      
+      const chaveAluno = aluno_${usuarioAtual.email};
+      localStorage.setItem(chaveAluno, JSON.stringify(treinoAtual));
+      
+      document.getElementById('alerta-evolucao').classList.add('hidden');
+      mostrarTelaTreino();
+    }
+
+    function resetarTreino() {
+      if (confirm("Tem certeza? Isso vai apagar seu treino atual e você precisará preencher o formulário novamente.")) {
+        const chaveAluno = aluno_${usuarioAtual.email};
+        localStorage.removeItem(chaveAluno);
+        location.reload();
+      }
+    }
+
+    function renderizarNovidades() {
+      const novidades = getNovidadesSemana();
+      const container = document.getElementById('novidades-semana');
+      
+      container.innerHTML = novidades.map(ex => 
+        <div class="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 bg-fit-primary/10 text-fit-primary rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fa fa-star"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-bold text-gray-800">${ex.nome}</h3>
+              <p class="text-xs text-gray-500 mt-1">${ex.nota}</p>
+              <button onclick="adicionarAoTreino('${ex.nome}')" class="mt-2 text-xs bg-fit-primary text-white px-3 py-1 rounded-full hover:opacity-90 transition">
+                + Adicionar ao treino
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function gerarNovoTreinoIA() {
+      if (!confirm("A IA vai gerar um treino totalmente novo e personalizado para você. Deseja continuar?")) return;
+      
+      const btn = event.target;
+      const textoOriginal = btn.innerHTML;
+      btn.innerHTML = "⏳ Gerando com IA...";
+      btn.disabled = true;
+      const treinoIA = await gerarTreinoComIA(treinoAtual);
+      
+      if (treinoIA) {
+        if (confirm(✅ Treino gerado: "${treinoIA.nomeTreino}"\n\n${treinoIA.descricao}\n\nDeseja substituir seu treino atual por este?)) {
+          treinoAtual.treinos = treinoIA.treinos;
+          treinoAtual.nomeTreinoIA = treinoIA.nomeTreino;
+          treinoAtual.dicasIA = treinoIA.dicas;
+          treinoAtual.dataUltimaAlteracao = new Date().toISOString();
+          
+          const chaveAluno = aluno_${usuarioAtual.email};
+          localStorage.setItem(chaveAluno, JSON.stringify(treinoAtual));
+          
+          renderizarTreinos();
+          alert("✅ Treino atualizado com sucesso!");
+        }
+      } else {
+        alert("❌ Erro ao gerar treino. Tente novamente.");
+      }

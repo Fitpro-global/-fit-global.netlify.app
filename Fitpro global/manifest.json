@@ -1,0 +1,23 @@
+{
+  "name": "FIT GLOBAL - Academia Completa",
+  "short_name": "FIT GLOBAL",
+  "description": "Treinos personalizados, IA de atendimento e evolução completa.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#FF3D00",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
